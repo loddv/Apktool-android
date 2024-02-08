@@ -4,11 +4,15 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	package="com.a4455jkjh.apktool">
 
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-		android:maxSdkVersion="32"
-		tools:ignore="ScopedStorage" />
+	<!-- File management permissions -->
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
-	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+	<!-- Read the applied list permission -->
+	<uses-permission android:name="com.android.permission.GET_INSTALLED_APPS" />
+	<!-- Install application permissions -->
+	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
 	<application
 		android:name=".ApktoolApplication"
