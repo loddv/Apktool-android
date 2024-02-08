@@ -3,6 +3,23 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+// Configure each application variant
+android.applicationVariants.configureEach { variant ->
+    // Configure each output of the variant
+    variant.outputs.configureEach { output ->
+        // Format the current date
+        def formattedDate = new Date().format('yyyyMMddHHmmss')
+        // Get the version name of the variant
+        def versionName = variant.versionName
+        // Get the build type of the variant
+        def buildType = variant.buildType.name
+        // Create a new APK name with the version name, build type, and formatted date
+        def newApkName = "apktool-${versionName}-${buildType}-${formattedDate}.apk"
+        // Set the output file name to the new APK name
+        output.outputFileName = newApkName
+    }
+}
+
 android {
     namespace 'com.a4455jkjh.apktool'
     compileSdk 28
