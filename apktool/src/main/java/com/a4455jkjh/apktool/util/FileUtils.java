@@ -1,5 +1,6 @@
 package com.a4455jkjh.apktool.util;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -125,8 +126,9 @@ public class FileUtils {
 	}
 
 	private static void translate(Context ctx, File file) {
-		Toast.makeText(ctx, "敬请期待",0).show();
+		Toast.makeText(ctx, "敬请期待", Toast.LENGTH_SHORT).show();
 	}
+	@SuppressLint("WrongConstant")
 	public static void installPKG(Context c, File apk) {
 		Uri data;
 		if (Build.VERSION.SDK_INT >= 24) {

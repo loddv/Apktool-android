@@ -1,5 +1,6 @@
 package com.a4455jkjh.apktool;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,7 +44,7 @@ public class MainActivity extends ThemedActivity implements DrawerLayout.DrawerL
         setContentView(R.layout.main);
 		drawer = findViewById(R.id.drawer);
 		drawer.addDrawerListener(this);
-		getActionBar().setDisplayOptions(16);
+		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		getActionBar().setCustomView(R.layout.title);
 		init(getSupportFragmentManager());
     }
@@ -79,7 +80,7 @@ public class MainActivity extends ThemedActivity implements DrawerLayout.DrawerL
 		files.bind(editor);
 		this.files = files;
 	}
-	private long lastClicked = 0l;
+	private long lastClicked = 0L;
 
 	@Override
 	public void onBackPressed() {

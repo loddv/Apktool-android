@@ -1,29 +1,63 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.0"
+    namespace 'com.a4455jkjh.apktool'
+    compileSdk 28
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found
+        abortOnError false
+    }
 
     defaultConfig {
         applicationId "com.a4455jkjh.apktool"
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdk 14
+        //noinspection ExpiredTargetSdkVersion
+        targetSdk 28
         versionCode 1903280240
         versionName "2.4.0-190328"
+        // Enable multidex. (Fix D8 dex file # methods: 71610 > 65536)
+        multiDexEnabled true
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            jniDebuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // Fix Duplicate class org.intellij.lang.annotations.Identifier found in modules.
+    // https://stackoverflow.com/questions/76906238/duplicate-class-org-intellij-lang-annotations-identifier-found-in-modules-how-c
+    configurations {
+        implementation.exclude group: 'org.jetbrains', module: 'annotations'
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-	compile 'androidx.drawerlayout:drawerlayout:1.0.0+'
-	compile 'androidx.viewpager:viewpager:1.0.0+'
-	compile 'androidx.interpolator:interpolator:1.0.0'
-	compile 'androidx.fragment:fragment:1.0.0'
-} 
+    implementation "androidx.drawerlayout:drawerlayout:1.0.0"
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'androidx.interpolator:interpolator:1.0.0'
+    implementation 'androidx.fragment:fragment:1.0.0'
+
+    // Fix D8: Cannot fit requested classes in a single dex file (# methods: 71610 > 65536)
+    // https://stackoverflow.com/questions/55591958/flutter-firestore-causing-d8-cannot-fit-requested-classes-in-a-single-dex-file#55592039
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // Fix Duplicate class com.google.common.util.concurrent.ListenableFuture found in modules guava-20.0.jar (com.google.guava:guava:20.0)
+    // https://stackoverflow.com/questions/56639529/duplicate-class-com-google-common-util-concurrent-listenablefuture-found-in-modu
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+}
 
